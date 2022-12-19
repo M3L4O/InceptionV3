@@ -46,6 +46,8 @@ def get_augmenter():
 
     rotations = iaa.OneOf(
         [
+            iaa.Rotate((15, 345)),
+            iaa.Rotate((30, 330)),
             iaa.Rotate((60, 300)),
             iaa.Rotate((45, 315)),
             iaa.Rotate((90, 270)),
@@ -68,8 +70,7 @@ def get_augmenter():
         ]
     )
 
-    geometric = iaa.SomeOf(
-        2,
+    geometric = iaa.OneOf(
         [
             iaa.Affine(shear=(-16, 16)),
             iaa.ShearX((-20, 20)),
@@ -145,7 +146,10 @@ def augment_generator(
 
         for j in range(new_images):
             new_filepath = os.path.join(dir_aug_images, f"{filename}_{j}.jpg")
-            cv2.imwrite(new_filepath, cv2.resize(cv2.cvtColor(aug_images[j], cv2.COLOR_RGB2BGR), img_size))
+            cv2.imwrite(
+                new_filepath,
+                cv2.resize(cv2.cvtColor(aug_images[j], cv2.COLOR_RGB2BGR), img_size),
+            )
             new_rows.append((new_filepath, label))
 
         print(f"{i+1}/{len(df)}")
@@ -211,7 +215,9 @@ def split_dataframe(df, train_file, validation_file, test_file, augment_dir):
 
 def main():
 
-    metadata_filepath = r"D:\Bases de Imagens\ISIC2020\Meta_ISIC\ISIC_2020_Training_GroundTruth.csv"
+    metadata_filepath = (
+        r"D:\Bases de Imagens\ISIC2020\Meta_ISIC\ISIC_2020_Training_GroundTruth.csv"
+    )
     input_dir = r"D:\Bases de Imagens\ISIC2020\ISIC_2020_train"
 
     train_file = "train.csv"
@@ -225,4 +231,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
