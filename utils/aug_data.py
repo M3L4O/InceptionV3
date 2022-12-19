@@ -88,10 +88,11 @@ def get_augmenter():
 
     aug = iaa.Sequential(
         [
+            iaa.Sometimes(0.3, noise),
             zoom,
             rotations,
             iaa.SomeOf(
-                (2, None),
+                (1, None),
                 [
                     contrast,
                     geometric,
@@ -179,7 +180,7 @@ def split_dataframe(df, train_file, validation_file, test_file, augment_dir):
     df = pd.concat([df, balanced_df]).drop_duplicates(keep=False)
 
     train_df, dummy_df = train_test_split(
-        balanced_df, train_size=0.9, shuffle=True, random_state=1234
+        balanced_df, train_size=0.8, shuffle=True, random_state=1234
     )
 
     validation_df, test_df = train_test_split(
@@ -215,7 +216,7 @@ def main():
 
     train_file = "train.csv"
     validation_file = "validation.csv"
-    test_file = "train.csv"
+    test_file = "test.csv"
 
     augment_dir = r"D:\Bases de Imagens\ISIC2020\aug_train_malignant_images"
     df = get_clean_df(metadata_filepath, input_dir)
