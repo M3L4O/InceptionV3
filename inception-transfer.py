@@ -121,6 +121,7 @@ def train():
 
 
 if __name__ == "__main__":
+    #Aqui coloca o token
     wandb.login(key="01638e12d252ba3f829bf5b44b30a59a744ca6d4")
     METRICS = [
         tf.keras.metrics.TruePositives(name="tp"),
@@ -144,7 +145,7 @@ if __name__ == "__main__":
         os.mkdir(MODELS_DIR)
 
     sweep_configuration = {
-        "name": "inceptionV3-sweep",
+        "name": "inceptionV3",
         "entity": "joaovictormelo",
         "method": "grid",
         "metric": {"goal": "maximize", "name": "epoch/val_binary_accuracy"},
@@ -152,5 +153,5 @@ if __name__ == "__main__":
             "batch_size": {"values": [32]},
         },
     }
-    sweep_id = wandb.sweep(sweep=sweep_configuration, project="Inception-Transfer")
-    wandb.agent(sweep_id, project="Inception-Transfer", function=train)
+    sweep_id = wandb.sweep(sweep=sweep_configuration, project="InceptionV3-Transfer")
+    wandb.agent(sweep_id, function=train)

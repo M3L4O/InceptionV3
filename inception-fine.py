@@ -133,12 +133,12 @@ if __name__ == "__main__":
         os.mkdir(LOG_DIR)
 
     sweep_configuration = {
-        "name": "inceptionV3-sweep",
+        "name": "inceptionV3",
         "entity": "joaovictormelo",
         "method": "grid",
         "parameters": {
             "batch_size": {"values": [32]},
         },
     }
-    sweep_id = wandb.sweep(sweep=sweep_configuration, project="Inception-Fine")
+    sweep_id = wandb.sweep(sweep=sweep_configuration, project="InceptionV3-fine")
     wandb.agent(sweep_id=sweep_id, function=train)
