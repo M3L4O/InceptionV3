@@ -97,7 +97,6 @@ def get_augmenter():
                 [
                     contrast,
                     geometric,
-                    noise,
                 ],
             ),
         ]
