@@ -89,16 +89,18 @@ def get_augmenter():
 
     aug = iaa.Sequential(
         [
-            iaa.Sometimes(0.3, noise),
+            iaa.Sometimes(
+                0.3,
+                iaa.OneOf(
+                    [
+                        contrast,
+                        noise,
+                    ],
+                ),
+            ),
             zoom,
             rotations,
-            iaa.SomeOf(
-                (1, None),
-                [
-                    contrast,
-                    geometric,
-                ],
-            ),
+            iaa.Sometimes(0.5, geometric),
         ]
     )
 
